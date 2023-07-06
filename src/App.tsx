@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import WeatherModal from './modals/WeatherModal'
+import './App.css'
+import { optionType } from './types/types';
+import axios from 'axios';
+import useForecast from './hooks/useForecast';
+import Forecast from './components/Forecast';
 
-function App() {
+
+
+const App = (): JSX.Element=> {
+  const { searchValue,
+    options,
+    forecast,
+    onInputChange,
+    onOptionSelect,
+    onSubmit} = useForecast()
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <div style={{display:'flex', justifyContent:'center', alignItems:'center', height:'500px', }}>
+          {forecast ? <Forecast data ={forecast} /> : (
+            <WeatherModal searchValue={searchValue} 
+            options={options} 
+            onInputChange={onInputChange} 
+            onOptionSelect={onOptionSelect} 
+            onSubmit={onSubmit} />
+            )}
+            
     </div>
-  );
-}
+      )}
+      
 
-export default App;
+
+export default App
